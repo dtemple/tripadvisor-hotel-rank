@@ -1,9 +1,13 @@
+
+#setwd("~/Google Drive/0 + Documents/Hotels/tripadvisor-rank-csvs")
+setwd("~/r-directory/TripAdvisor-data/new-york")
+
 library(dplyr)
 library('XML')
 library(rvest)
 
 ### SCRIPT FOR PAGE 1 ONLY ###
-#html<-read_html("https://www.tripadvisor.com/Hotels-g60713-San_Francisco_California-Hotels.html")
+#html<-read_html("https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html")
 #hotelrank<-html_nodes(html,'.p13n_imperfect .property_title , .p13n_imperfect .slim_ranking')
 #hotels<-html_text(hotelrank)
 #hotels
@@ -15,7 +19,7 @@ library(rvest)
 # Save as a file
 
 #parse html search result
-page0_url<-read_html ("https://www.tripadvisor.com/Hotels-g60713-oa0-San_Francisco_California-Hotels.html")
+page0_url<-read_html ("https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html")
 
 # find the the lnumber of the last page listed in the bottom of the main page
 npages<-page0_url%>% 
@@ -34,8 +38,8 @@ idx_s=0 #start index of the entries in the vectors
 for (i in 1:7)
 {
   #change page url in every iteration to go to the next page 
-  page_url<-paste("https://www.tripadvisor.com/Hotels-g60713-oa",offset,
-                  "-San_Francisco_California-Hotels.html",sep="")
+  page_url<-paste("https://www.tripadvisor.com/Hotels-g60763-oa",offset,
+                  "-New_York_City_New_York-Hotels.html",sep="")
   #parse HTML page
   link<-read_html(page_url)
   
@@ -57,7 +61,7 @@ for (i in 1:7)
     html_nodes(".p13n_imperfect .slim_ranking") %>% 
     html_text() %>%
     gsub("#", "", .) %>%
-    gsub(" of 235 hotels in San Francisco", "", .) %>%
+    gsub(" of 477 hotels in New York City", "", .) %>%
     as.numeric()
 
   
@@ -93,10 +97,10 @@ lenRank=length(Hotel_Rank)
 ff<-data.frame(Hotel_Name,Hotel_ReviewCount,Hotel_Rank,stringsAsFactors=F)
 
 #save in RDs file
-save(ff,file="sf_hotels.Rds")
+save(ff,file="ny_hotels.Rds")
 
 #Write data frame to a CSV file
-write.table(ff,file=paste (Sys.Date(),"hotels.csv"),sep=",",row.names = F)
+write.table(ff,file=paste (Sys.Date(),"NY hotels.csv"),sep=",",row.names = F)
 
 #Quit command for Automator
 quit(save="no")

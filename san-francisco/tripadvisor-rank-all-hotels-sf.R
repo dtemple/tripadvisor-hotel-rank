@@ -1,3 +1,7 @@
+
+#setwd("~/Google Drive/0 + Documents/Hotels/tripadvisor-rank-csvs")
+setwd("~/r-directory/TripAdvisor-data/san-francisco")
+
 library(dplyr)
 library('XML')
 library(rvest)
